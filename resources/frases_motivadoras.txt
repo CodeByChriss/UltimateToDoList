@@ -48,3 +48,4 @@ Eres un work in progress, y eso está perfectamente bien.
 La vida es como CSS: a veces solo necesitas un poco de flex.
 No te compares, cada uno tiene su propio branch.
 Sigue tus instintos, pero no ignores la documentación.
+Me da igual las tecnologías que sepas, lo mas importante es la LOGICA.
