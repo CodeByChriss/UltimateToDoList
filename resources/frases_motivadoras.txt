@@ -1,2 +1,50 @@
-ECHO is on.
-Java mi religión, oracle-doc mi biblia
+¡Tú puedes con todo, aunque a veces el café diga lo contrario!
+Cree en ti mismo, porque el universo no tiene tiempo de hacerlo por ti.
+Cada paso que das te acerca a tus sueños, o al menos a un buen café.
+No te rindas, los milagros ocurren después de la tercera taza de café.
+Si la vida te da limones, cámbialos por código limpio.
+Eres más fuerte de lo que crees, incluso cuando el Wi-Fi está débil.
+Sigue adelante, aunque sea a paso de tortuga con resaca.
+Python es mi terapeuta, y los bucles mi sesión de meditación.
+El éxito no es la meta, es el camino (y a veces un atajo en Google).
+No dejes para mañana lo que puedes procrastinar hoy.
+Levántate, brilla, y si no, al menos enciende la luz.
+Si el plan A falla, recuerda que hay 25 letras más.
+Codea como si nadie estuviera debuggeando.
+El único límite es tu imaginación, o la RAM de tu portátil.
+Cada error es una lección, cada bug una aventura.
+La vida es un algoritmo: sigue iterando hasta que funcione.
+Java mi religión, oracle-doc mi biblia.
+Cree en tus sueños, pero primero termina ese sprint.
+No pares, aunque el servidor esté en 503.
+Eres un lienzo en blanco, pinta con código o con ganas.
+El éxito es 1% inspiración, 99% transpiración, y un buen playlist.
+Si no puedes con el enemigo, prueba con un merge.
+Sigue tu pasión, pero no olvides el cargador.
+Cada día es una nueva oportunidad para refactorizar tu vida.
+Puedes con todo (o no, pero inténtalo igual).
+La vida es como Git: a veces necesitas un buen commit.
+No temas fallar, teme no intentarlo (o un null pointer).
+Escribe código como si tu madre fuera a revisarlo.
+El camino al éxito está lleno de excepciones, ¡maneja todas!
+Tus sueños no tienen fecha de caducidad, pero tu café sí.
+Si la vida te pone un bug, escribe un test para atraparlo.
+No busques excusas, busca soluciones (o stackoverflow).
+Eres el arquitecto de tu destino, y el debugger de tus errores.
+Sigue brillando, aunque sea en modo dark theme.
+La persistencia convierte sueños en logros, y café en código.
+Si no sabes por dónde empezar, prueba con print("Hola, mundo").
+Cae siete veces, levántate ocho, o pide ayuda en Slack.
+El éxito no espera, pero tu build sí, así que ten paciencia.
+Eres más grande que cualquier error de compilación.
+La vida es un bucle: sigue hasta que encuentres el break.
+No dejes que el miedo apague tu spark.
+Cada desafío es una oportunidad para un pull request épico.
+Cree en ti, porque hasta el código más feo puede funcionar.
+El universo conspira a tu favor, pero no siempre en tiempo real.
+Si todo falla, reinicia el router y tu mentalidad.
+Codea con amor, debuggea con paciencia.
+Eres un work in progress, y eso está perfectamente bien.
+La vida es como CSS: a veces solo necesitas un poco de flex.
+No te compares, cada uno tiene su propio branch.
+Sigue tus instintos, pero no ignores la documentación.
