@@ -49,3 +49,52 @@ La vida es como CSS: a veces solo necesitas un poco de flex.
 No te compares, cada uno tiene su propio branch.
 Sigue tus instintos, pero no ignores la documentación.
 Da igual las tecnologías que sepas, lo mas importante es la LÓGICA.
+El éxito es un marathon, no un sprint (a menos que sea un hackathon).
+Si la vida te da un segmentation fault, busca el puntero roto.
+Eres más valiente que un deploy en viernes.
+Cada pequeño paso cuenta, incluso si es solo un console.log.
+No dejes que un bug te defina, tú defines el bug.
+La motivación es como el RAM: úsala antes de que se acabe.
+Sigue aprendiendo, porque el conocimiento no tiene 404.
+Si no puedes volar, corre; si no puedes correr, codea.
+Eres el héroe de tu propia historia, y el villano de tu backlog.
+La vida es un puzzle, y tú tienes todas las piezas (o casi).
+No esperes el momento perfecto, solo escribe la primera línea.
+Codear es como vivir: nadie sabe exactamente qué hace, pero lo intenta.
+Eres más fuerte que el peor error de sintaxis.
+Si el código no funciona, no eres tú, es el compilador (o no).
+Cada día es una nueva oportunidad para un git push.
+No dejes que el miedo al error te impida compilar.
+La vida es como un API: a veces necesitas leer la documentación dos veces.
+Sigue soñando, pero mantén un backup de tus metas.
+Eres un masterpiece, incluso con un par de bugs.
+El éxito es la suma de pequeños commits diarios.
+Si la vida te da un loop infinito, encuentra el break.
+Cree en el poder de un buen refactoring.
+No te rindas, aunque el pipeline falle tres veces seguidas.
+Eres más brillante que un LED en modo overclock.
+La vida es como JavaScript: confusa, pero al final funciona.
+Sigue adelante, aunque sea con un try-catch.
+Cada error te hace más sabio, o al menos más googler.
+No dejes que un crash apague tu pasión.
+Eres el MVP de tu propio proyecto.
+Si no sabes cómo empezar, comienza con un café.
+La vida es un frontend, tú decides el backend.
+No temas al cambio, teme al código sin versionar.
+Eres más rápido que un query optimizado.
+Sigue tus sueños, pero no olvides el linter.
+Cada día es una oportunidad para un hotfix en tu vida.
+Si la vida te da un 404, crea la página que falta.
+Cree en ti, porque hasta el código legacy tiene su lugar.
+No dejes que un timeout apague tu entusiasmo.
+Eres más poderoso que un supercomputador (con café).
+La vida es como un repo: haz commit de tus logros.
+Sigue aprendiendo, porque el stack nunca se detiene.
+Si no puedes con todo, delega (o usa una librería).
+Eres el try de tu propio try-catch.
+No dejes que un bug te robe la sonrisa.
+La vida es un sprint, pero tú decides el ritmo.
+Cree en tus ideas, aunque el linter las marque en rojo.
+Eres más grande que cualquier stack overflow.
+Sigue adelante, porque el código no se escribe solo (todavía).
+Si todo falla, recuerda: puedes con todo (o no, pero dale una oportunidad).
