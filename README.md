@@ -61,5 +61,5 @@ El proyecto está implementado en Java y consta de dos clases principales:
 
 ## 📝 Notas
 
-- El método `limpiarPantalla()` usa códigos ANSI, que podrían no funcionar en todas las terminales (por ejemplo, CMD en Windows).
+- El método `limpiarPantalla()` usa códigos ANSI, que podrían no funcionar en todas las terminales.
 - Asegúrate de que las rutas de archivos sean válidas en tu sistema operativo.
