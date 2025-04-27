@@ -21,6 +21,7 @@ public class Main {
 	public static void main(String[]args) throws IOException {
 		BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
 		boolean continuar = true; // true -> El programa continua | false -> El programa se detiene
+		boolean visualizar = true;
 		int respuesta=0;
 		
 		System.out.println("BIENVENIDO A ULTIMATE TO-DO LIST");
@@ -32,12 +33,26 @@ public class Main {
 		visualizarMenu();
 		
 		do {
+			if(visualizar) {
+				limpiarPantalla();
+				visualizarTareas();
+				visualizarMenu();
+				visualizar = false;
+			}
 			respuesta = opcionElegida(lector);
 			switch(respuesta) {
 				case 1:
 					agregarTarea(lector);
+					visualizar = true;
 					break;
 				case 2:
+					if(tareas.length > 0) {
+						modificarTarea(lector);
+						visualizar = true;
+					}else
+						System.out.println("No hay tareas que modificar");
+					break;
+				case 3:
 					continuar = false;
 					break;
 			}
@@ -132,7 +147,8 @@ public class Main {
 		System.out.println("\n \t Men\u00fa de opcines: \n"
 				+ "\t .......................................................... \n"
 				+ "\t\t 1 - Agregar nueva tarea \n"
-				+ "\t\t 2 - Finalizar Programa \n");
+				+ "\t\t 2 - Modificar Tarea \n"
+				+ "\t\t 3 - Finalizar Programa \n");
 	}
 	
 	public static int opcionElegida(BufferedReader lector) throws IOException {
@@ -160,6 +176,8 @@ public class Main {
 		int estado;
 		Tarea []tareasTmp;
 		
+		limpiarPantalla();
+		
 		System.out.print("Introduce el nombre de la nueva tarea: ");
 		nombre = lector.readLine();
 		
@@ -176,5 +194,89 @@ public class Main {
 		tareasTmp[tareas.length] = new Tarea(estado, nombre);
 		
 		tareas = tareasTmp;
+	}
+	
+	public static void modificarTarea(BufferedReader lector) throws IOException{
+		String nuevoNombre;
+		int respuesta=0, accion=0;
+		boolean error=true;
+		
+		limpiarPantalla();
+		
+		System.out.println("Las tareas son: \n");
+		
+		for(int i = 0; i<tareas.length;i++) {
+			System.out.println("\t" + (i+1) + ". [" + (tareas[i].getEstado() == 0 ? porHacer : completado) + "] \t " + tareas[i].getNombre() + "\n");
+		}
+		
+		System.out.print("Tarea a modificar: ");
+		do {
+			try {
+				respuesta = Integer.parseInt(lector.readLine());
+				if(respuesta >= 1 && respuesta <= tareas.length)
+					error = false;
+			}catch(NumberFormatException e) {
+				respuesta = 0;
+			}
+			if(error)
+				System.out.print("Esa tarea no existe. Introduce una existente: ");
+		}while(error);
+		respuesta--; // se le resta 1 por que el index de un Array empieza en 0 pero lo hemos mostrado empezando por 1 
+		
+		System.out.println("¿Qu\u00e9 quieres hacer?\n"
+				+ "\t 1 - Cambiar el nombre \n"
+				+ "\t 2 - Cambiar el estado \n"
+				+ "\t 3 - Cambiar el nombre y el estado \n"
+				+ "\t 4 - Eliminar tarea \n");
+		System.out.println("Acci\u00f3n a realizar: ");
+		error = true;
+		do {
+			try {
+				accion = Integer.parseInt(lector.readLine());
+				if(accion >= 1 && accion <= 4)
+					error = false;
+			}catch(NumberFormatException e) {
+				accion = 0;
+			}
+			if(error)
+				System.out.print("Esa acci\u00f3n no existe. Introduce una existente: ");
+		}while(error);
+		
+		if(accion == 1) {
+			System.out.print("Introduce el nuevo nombre para la tarea: ");
+			nuevoNombre = lector.readLine();
+			tareas[respuesta].setNombre(nuevoNombre);
+		}else if(accion == 2) {
+			tareas[respuesta].setEstado(tareas[respuesta].getEstado() == 1 ? 0 : 1);
+		}else if(accion == 3){
+			System.out.print("Introduce el nuevo nombre para la tarea: ");
+			nuevoNombre = lector.readLine();
+			tareas[respuesta].setNombre(nuevoNombre);
+			tareas[respuesta].setEstado(tareas[respuesta].getEstado() == 1 ? 0 : 1);
+		}else{
+			eliminarTarea(respuesta);
+		}
+	}
+	
+	public static void eliminarTarea(int tareaIndex) {
+		Tarea []tmpTareas = new Tarea[tareas.length-1];
+		boolean pasado = false;
+		for(int i=0; i<tareas.length; i++ ) {
+			if(i == tareaIndex) {
+				pasado = true;
+			}else {
+				tmpTareas[pasado ? i-1 : i] = tareas[i];
+			}
+		}
+		tareas = tmpTareas;
+	}
+
+	/*
+	 * Método que nos va a permitir limpiar la pantalla de la terminal.
+	 * Esto puede no funcionar para todas las terminales.
+	 */
+	public static void limpiarPantalla() throws IOException {
+		System.out.print("\033[H\033[2J");
+		System.out.flush();
 	}
 }
