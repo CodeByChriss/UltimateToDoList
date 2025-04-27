@@ -20,6 +20,7 @@ public class Main {
 	public static void main(String[]args) throws IOException {
 		BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
 		boolean continuar = true; // true -> El programa continua | false -> El programa se detiene
+		boolean visualizar = true;
 		int respuesta=0;
 
 		System.out.println("BIENVENIDO A ULTIMATE TO-DO LIST");
@@ -31,13 +32,24 @@ public class Main {
 		visualizarMenu();
 
 		do {
+			if(visualizar) {
+				limpiarPantalla();
+				visualizarTareas();
+				visualizarMenu();
+				visualizar = false;
+			}
 			respuesta = opcionElegida(lector);
 			switch(respuesta) {
 				case 1:
 					agregarTarea(lector);
+					visualizar = true;
 					break;
 				case 2:
-					modificarTarea(lector);
+					if(tareas.length > 0) {
+						modificarTarea(lector);
+						visualizar = true;
+					}else
+						System.out.println("No hay tareas que modificar");
 					break;
 				case 3:
 					continuar = false;
@@ -162,7 +174,9 @@ public class Main {
 		String nombre;
 		int estado;
 		Tarea []tareasTmp;
-
+		
+		limpiarPantalla();
+		
 		System.out.print("Introduce el nombre de la nueva tarea: ");
 		nombre = lector.readLine();
 
@@ -185,9 +199,11 @@ public class Main {
 		String nuevoNombre;
 		int respuesta=0, accion=0;
 		boolean error=true;
-
+		
+		limpiarPantalla();
+		
 		System.out.println("Las tareas son: \n");
-
+		
 		for(int i = 0; i<tareas.length;i++) {
 			System.out.println("\t" + (i+1) + ". [" + (tareas[i].getEstado() == 0 ? porHacer : completado) + "] \t " + tareas[i].getNombre() + "\n");
 		}
@@ -204,8 +220,7 @@ public class Main {
 			if(error)
 				System.out.print("Esa tarea no existe. Introduce una existente: ");
 		}while(error);
-		respuesta--; // se le resta 1 por que el index de un Array empieza en 0 pero lo hemos mostrado empezando por 1
-
+		respuesta--; // se le resta 1 por que el index de un Array empieza en 0 pero lo hemos mostrado empezando por 1 
 		System.out.println("¿Qu\u00e9 quieres hacer?\n"
 				+ "\t 1 - Cambiar el nombre \n"
 				+ "\t 2 - Cambiar el estado \n"
@@ -252,5 +267,14 @@ public class Main {
 			}
 		}
 		tareas = tmpTareas;
+	}
+
+	/*
+	 * Método que nos va a permitir limpiar la pantalla de la terminal.
+	 * Esto puede no funcionar para todas las terminales.
+	 */
+	public static void limpiarPantalla() throws IOException {
+		System.out.print("\033[H\033[2J");
+		System.out.flush();
 	}
 }
