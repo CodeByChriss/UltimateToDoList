@@ -338,7 +338,6 @@ public class Main {
         }
     }
 
-    /*
      * Método que nos va a permitir limpiar la pantalla de la terminal.
      * Esto puede no funcionar para todas las terminales.
      */
