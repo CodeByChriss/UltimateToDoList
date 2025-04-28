@@ -1,6 +1,7 @@
 package ParaCommits;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Main {
@@ -19,7 +20,7 @@ public class Main {
 	 * se intente leer el array sin declarar, lo que causaría
 	 * un error.
 	 */
-	private static Tarea []tareas = new Tarea[0];
+	private static ArrayList<Tarea> tareas = new ArrayList<Tarea>();
 	
 	public static void main(String[]args) throws IOException {
 		BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
@@ -34,13 +35,11 @@ public class Main {
 		// Preguntamos al usuario si tiene alguna sesión anterior para cargar.
 		sesionAnterior(lector);
 		
+		limpiarPantalla();
+		visualizarTareas();
+		visualizarMenu();
+
 		do {
-			if(visualizar) {
-				limpiarPantalla();
-				visualizarTareas();
-				visualizarMenu();
-				visualizar = false;
-			}
 			respuesta = opcionElegida(lector);
 			switch(respuesta) {
 				case 1:
@@ -48,25 +47,32 @@ public class Main {
 					visualizar = true;
 					break;
 				case 2:
-					if(tareas.length > 0) {
+					if(!tareas.isEmpty()) {
 						modificarTarea(lector);
 						visualizar = true;
-					}else
-						System.out.println("No hay tareas que modificar");
+					}else{
+						limpiarPantalla();
+						System.out.println("No hay tareas que modificar.\n");
+						visualizarTareas();
+						visualizarMenu();
+					}
 					break;
 				case 3: 
 					obtenerFraseMotivadora();
 					break;
 				case 4:
-					if(tareas.length > 0) {
+					if(!tareas.isEmpty()) {
 						guardarTareas(lector);
 					}else{
-						System.out.println("No hay tareas suficientes para guardar la sesi\u00f3n actual.");
+						limpiarPantalla();
+						System.out.println("No hay tareas suficientes para guardar la sesi\u00f3n actual.\n");
+						visualizarTareas();
+						visualizarMenu();
 					}
 					break;
 				case 5: 
 					obtenerFraseMotivadora();
-					continuar=false
+					continuar=false;
 					break;
 			}
 		}while(continuar);
@@ -95,9 +101,8 @@ public class Main {
 		File sesionAntigua;
 		FileInputStream fis;
 		DataInputStream dis;
-		BufferedReader contarLineas;
 		String nombre;
-		int estado, cntLineas, index;
+		int estado;
 		char repetir = 'N', basura;
 		
 		do {
@@ -110,25 +115,18 @@ public class Main {
 				fis = new FileInputStream(sesionAntigua);
 				dis = new DataInputStream(fis);
 				
-				// Contamos la cantidad de lineas que hay en fichero (una linea = una tarea)
-				contarLineas = new BufferedReader(new FileReader(sesionAntigua));
-				cntLineas=0;
-				while(contarLineas.readLine()!=null) {
-					cntLineas++;
-				}
-				tareas = new Tarea[cntLineas];
-				
-				// Leemos el fichero y creamos las tareas
-				index = 0;
-				
-				while(index < cntLineas) {
+				// Leemos el fichero y agregamos las tareas al ArrayList
+				while(dis.available() > 0) {
 					estado = dis.readInt();
 					nombre = dis.readUTF();
 					basura = dis.readChar(); // debemos leer el salto de linea para evitar problemas
 					
-					tareas[index] = new Tarea(estado, nombre);
-					index++;
+					tareas.add(new Tarea(estado, nombre));
 				}
+				limpiarPantalla();
+				System.out.println("Sesi\u00f3n cargada correctamente.\n");
+				visualizarTareas();
+				visualizarMenu();
 			}else {
 				System.out.println("Ha ocurrido un error durante el proceso. ¿Quieres volver a repetirlo? SI o NO");
 				repetir = lector.readLine().toUpperCase().charAt(0);
@@ -137,27 +135,26 @@ public class Main {
 	}
 	
 	public static void visualizarTareas() {
-		if(tareas.length > 0) {
+		System.out.println("Tus tareas actuales son: \n");
+		if(!tareas.isEmpty()) {
 			boolean todasCompletadas = true; // si estan todas completadas se mostrará un mensaje especial.
-			
-			System.out.println("Tus tareas actuales son: \n");
-			for(int i = 0; i<tareas.length;i++) {
-				if( todasCompletadas && tareas[i].getEstado() == 0)
+			for(Tarea tr : tareas) {
+				if( todasCompletadas && tr.getEstado() == 0)
 					todasCompletadas = false;
 				
-				System.out.println("\t [" + (tareas[i].getEstado() == 0 ? porHacer : completado) + "] \t " + tareas[i].getNombre() + "\n");
+				System.out.println("\t [" + (tr.getEstado() == 0 ? porHacer : completado) + "] \t " + tr.getNombre() + "\n");
 			}
 			
 			if(todasCompletadas) {
 				System.out.println("\t Parece que has completado todas tus tareas, ¡ENHORABUENA! \n \t ¿A qu\u00e9 esperas para empezar tu siguiente desafio?");
 			}
 		}else {
-			System.out.println("\n\t No hay tareas pendientes. Agrega una para empezar.");
+			System.out.println("\t No hay tareas pendientes. Agrega una para empezar.");
 		}
 	}
 	
 	public static void visualizarMenu(){
-		System.out.println("\n \t Men\u00fa de opcines: \n"
+		System.out.println("\n \t Men\u00fa de opciones: \n"
 				+ "\t .......................................................... \n"
 				+ "\t\t 1 - Agregar nueva tarea \n"
 				+ "\t\t 2 - Modificar tarea existente \n"
@@ -189,7 +186,6 @@ public class Main {
 	public static void agregarTarea(BufferedReader lector) throws IOException {
 		String nombre;
 		int estado;
-		Tarea []tareasTmp;
 		
 		limpiarPantalla();
 		
@@ -200,35 +196,32 @@ public class Main {
 		// Si no introduce cualquier otra cosa que no sea un SI, damos por hecho que es que un NO.
 		estado = lector.readLine().toUpperCase().charAt(0) == 'S' ? 1 : 0;
 		
-		// Declaramos el array temporal con un +1 para luego agregar la nueva tarea
-		tareasTmp = new Tarea[tareas.length+1];
-		// Pasamos todas las tareas ya existentes al array temporal
-		for(int i = 0; i<tareas.length;i++) {
-			tareasTmp[i] = tareas[i];
-		}
-		tareasTmp[tareas.length] = new Tarea(estado, nombre);
-		
-		tareas = tareasTmp;
+		tareas.add(new Tarea(estado, nombre));
+		limpiarPantalla();
+		System.out.println("Tarea nueva agregada.\n");
+		visualizarTareas();
+		visualizarMenu();
 	}
 	
 	public static void modificarTarea(BufferedReader lector) throws IOException{
 		String nuevoNombre;
-		int respuesta=0, accion=0;
+		int respuesta=0, accion=0, index=0;
 		boolean error=true;
 		
 		limpiarPantalla();
 		
 		System.out.println("Las tareas son: \n");
 		
-		for(int i = 0; i<tareas.length;i++) {
-			System.out.println("\t" + (i+1) + ". [" + (tareas[i].getEstado() == 0 ? porHacer : completado) + "] \t " + tareas[i].getNombre() + "\n");
+		for(Tarea tr : tareas) {
+			System.out.println("\t" + (index+1) + ". [" + (tr.getEstado() == 0 ? porHacer : completado) + "] \t " + tr.getNombre() + "\n");
+			index++;
 		}
 		
 		System.out.print("Tarea a modificar: ");
 		do {
 			try {
 				respuesta = Integer.parseInt(lector.readLine());
-				if(respuesta >= 1 && respuesta <= tareas.length)
+				if(respuesta >= 1 && respuesta <= tareas.size())
 					error = false;
 			}catch(NumberFormatException e) {
 				respuesta = 0;
@@ -260,30 +253,57 @@ public class Main {
 		if(accion == 1) {
 			System.out.print("Introduce el nuevo nombre para la tarea: ");
 			nuevoNombre = lector.readLine();
-			tareas[respuesta].setNombre(nuevoNombre);
+			tareas.get(respuesta).setNombre(nuevoNombre);
 		}else if(accion == 2) {
-			tareas[respuesta].setEstado(tareas[respuesta].getEstado() == 1 ? 0 : 1);
+			tareas.get(respuesta).setEstado(tareas.get(respuesta).getEstado() == 1 ? 0 : 1);
 		}else if(accion == 3){
 			System.out.print("Introduce el nuevo nombre para la tarea: ");
 			nuevoNombre = lector.readLine();
-			tareas[respuesta].setNombre(nuevoNombre);
-			tareas[respuesta].setEstado(tareas[respuesta].getEstado() == 1 ? 0 : 1);
+			tareas.get(respuesta).setNombre(nuevoNombre);
+			tareas.get(respuesta).setEstado(tareas.get(respuesta).getEstado() == 1 ? 0 : 1);
 		}else{
-			eliminarTarea(respuesta);
+			tareas.remove(respuesta);
 		}
+		limpiarPantalla();
+		System.out.println("Tarea modificada.\n");
+		visualizarTareas();
+		visualizarMenu();
 	}
 	
-	public static void eliminarTarea(int tareaIndex) {
-		Tarea []tmpTareas = new Tarea[tareas.length-1];
-		boolean pasado = false;
-		for(int i=0; i<tareas.length; i++ ) {
-			if(i == tareaIndex) {
-				pasado = true;
-			}else {
-				tmpTareas[pasado ? i-1 : i] = tareas[i];
+	public static void obtenerFraseMotivadora() throws IOException {
+		File flMotivacion = new File(ficheroFrasesMot);
+		BufferedReader contarLineas;
+		BufferedReader leerFrase;
+		Random rd;
+		int cntLineas, numAleatorio;
+		String frase;
+		
+		limpiarPantalla();
+		if(flMotivacion.isFile()) {
+			// contamos la cantidad de lineas que tiene el fichero
+			contarLineas = new BufferedReader(new FileReader(flMotivacion));
+			cntLineas = 0;
+			while(contarLineas.readLine() != null) {
+				cntLineas++;
 			}
+			
+			// declaramos el random para seleccionar una linea aleatoria del fichero
+			rd = new Random();
+			numAleatorio = rd.nextInt(0, cntLineas);
+			
+			// leemos la frase y la mostramos
+			leerFrase = new BufferedReader(new FileReader(flMotivacion));
+			limpiarPantalla();
+			for(int i = 0; i<=numAleatorio;i++) {
+				frase = leerFrase.readLine();
+				if(i == numAleatorio)
+					System.out.println(frase+"\n");
+			}
+		}else{
+			System.out.println("Error al iniciar el fichero. ¡Pero tu puedes con todo! (o no)\n");
 		}
-		tareas = tmpTareas;
+		visualizarTareas();
+		visualizarMenu();
 	}
 	
 	public static void obtenerFraseMotivadora() throws IOException {
@@ -335,14 +355,17 @@ public class Main {
 			fos = new FileOutputStream(ficheroDestino);
 			dos = new DataOutputStream(fos);
 			
-			for(int i = 0; i<tareas.length; i++) {
-				dos.writeInt(tareas[i].getEstado());
-				dos.writeUTF(tareas[i].getNombre());
+			for(Tarea tr : tareas) {
+				dos.writeInt(tr.getEstado());
+				dos.writeUTF(tr.getNombre());
 				dos.writeChar('\n'); // agregamos un salto de linea para luego poder leer la cantidad de tareas que tenemos (al cargarlo)
 			}
 			dos.close();
 			fos.close();
-			System.out.println("Sesi\u00f3n guardada correctamente.");
+			limpiarPantalla();
+			System.out.println("Sesi\u00f3n guardada correctamente.\n");
+			visualizarTareas();
+			visualizarMenu();
 		}else if(carpeta.isFile()) {
 			System.out.println("Has introducido un fichero, proceso finalizado.");
 		}else{
