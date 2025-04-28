@@ -1,6 +1,5 @@
 package ParaCommits;
 
-
 import java.io.*;
 import java.util.Random;
 
@@ -28,13 +27,12 @@ public class Main {
 		boolean visualizar = true;
 		int respuesta=0;
 		
+		limpiarPantalla();
+		
 		System.out.println("BIENVENIDO A ULTIMATE TO-DO LIST");
 		
 		// Preguntamos al usuario si tiene alguna sesión anterior para cargar.
 		sesionAnterior(lector);
-		
-		visualizarTareas();
-		visualizarMenu();
 		
 		do {
 			if(visualizar) {
@@ -56,12 +54,19 @@ public class Main {
 					}else
 						System.out.println("No hay tareas que modificar");
 					break;
-				case 3:
+				case 3: 
 					obtenerFraseMotivadora();
 					break;
 				case 4:
-					continuar = false;
+					if(tareas.length > 0) {
+						guardarTareas(lector);
+					}else{
+						System.out.println("No hay tareas suficientes para guardar la sesi\u00f3n actual.");
+					}
+					break;
+				case 5: 
 					obtenerFraseMotivadora();
+					continuar=false
 					break;
 			}
 		}while(continuar);
@@ -155,9 +160,10 @@ public class Main {
 		System.out.println("\n \t Men\u00fa de opcines: \n"
 				+ "\t .......................................................... \n"
 				+ "\t\t 1 - Agregar nueva tarea \n"
-				+ "\t\t 2 - Modificar Tarea Existente \n"
+				+ "\t\t 2 - Modificar tarea existente \n"
 				+ "\t\t 3 - Mostrar frase motivadora \n"
-				+ "\t\t 4 - Finalizar Programa \n");
+				+ "\t\t 4 - Guardar sesi\u00f3n actual \n"
+				+ "\t\t 5 - Cerrar aplicaci\u00f3n \n");
 	}
 	
 	public static int opcionElegida(BufferedReader lector) throws IOException {
@@ -311,7 +317,39 @@ public class Main {
 			System.out.println("Error al iniciar el fichero. ¡Pero tu puedes con todo! (o no)");
 		}
 	}
-
+	
+	public static void guardarTareas(BufferedReader lector) throws IOException {
+		File carpeta;
+		File ficheroDestino;
+		FileOutputStream fos;
+		DataOutputStream dos;
+		String ruta, nombre;
+		
+		System.out.println("Introduce la ruta en la que quieres guardar la sesi\u00f3n (s\u00f3lo la carpeta):");
+		ruta = lector.readLine();
+		carpeta = new File(ruta);
+		
+		if(carpeta.isDirectory()) {
+			nombre = String.valueOf(System.currentTimeMillis()) + ".bin"; // nos devuelve la fecha actual en milisegundos, de esta forma nos aseguramos de que el nombre sea único
+			ficheroDestino = new File(carpeta, nombre);
+			fos = new FileOutputStream(ficheroDestino);
+			dos = new DataOutputStream(fos);
+			
+			for(int i = 0; i<tareas.length; i++) {
+				dos.writeInt(tareas[i].getEstado());
+				dos.writeUTF(tareas[i].getNombre());
+				dos.writeChar('\n'); // agregamos un salto de linea para luego poder leer la cantidad de tareas que tenemos (al cargarlo)
+			}
+			dos.close();
+			fos.close();
+			System.out.println("Sesi\u00f3n guardada correctamente.");
+		}else if(carpeta.isFile()) {
+			System.out.println("Has introducido un fichero, proceso finalizado.");
+		}else{
+			System.out.println("La ruta introducida no existe.");
+		}
+	}
+	
 	/*
 	 * Método que nos va a permitir limpiar la pantalla de la terminal.
 	 * Esto puede no funcionar para todas las terminales.
