@@ -66,7 +66,7 @@ public class Main {
 					break;
 				case 5: 
 					obtenerFraseMotivadora();
-					continuar=false;
+					continuar=false
 					break;
 			}
 		}while(continuar);
@@ -174,7 +174,7 @@ public class Main {
 		do {
 			try {
 				respuesta = Integer.parseInt(lector.readLine());
-				if(respuesta >= 1 && respuesta <= 5)
+				if(respuesta >= 1 && respuesta <= 4)
 					error = false;
 			}catch(NumberFormatException e) {
 				respuesta = 0;

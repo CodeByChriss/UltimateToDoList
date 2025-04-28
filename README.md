@@ -34,7 +34,7 @@ El proyecto está implementado en Java y consta de dos clases principales:
   - Proporciona constructores para crear tareas con o sin estado inicial.
 - `Main.java`:
   - Contiene la lógica principal del programa, incluyendo la interfaz de usuario, la gestión de tareas y el manejo de archivos.
-  - Usa un array estático (`Tarea[] tareas`) para almacenar las tareas de la sesión actual.
+  - Usa un array dinámico (`ArrayList<Tarea> tareas`) para almacenar las tareas de la sesión actual.
   - Implementa métodos para cada funcionalidad.
 
 ## 🛠️ Instalación y Ejecución
