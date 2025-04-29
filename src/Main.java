@@ -1,5 +1,3 @@
-package ParaCommits;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
@@ -171,7 +169,7 @@ public class Main {
 		do {
 			try {
 				respuesta = Integer.parseInt(lector.readLine());
-				if(respuesta >= 1 && respuesta <= 4)
+				if(respuesta >= 1 && respuesta <= 5)
 					error = false;
 			}catch(NumberFormatException e) {
 				respuesta = 0;
@@ -304,38 +302,6 @@ public class Main {
 		}
 		visualizarTareas();
 		visualizarMenu();
-	}
-	
-	public static void obtenerFraseMotivadora() throws IOException {
-		File flMotivacion = new File(ficheroFrasesMot);
-		BufferedReader contarLineas;
-		BufferedReader leerFrase;
-		Random rd;
-		int cntLineas, numAleatorio;
-		String frase;
-		
-		if(flMotivacion.isFile()) {
-			// contamos la cantidad de lineas que tiene el fichero
-			contarLineas = new BufferedReader(new FileReader(flMotivacion));
-			cntLineas = 0;
-			while(contarLineas.readLine() != null) {
-				cntLineas++;
-			}
-			
-			// declaramos el random para seleccionar una linea aleatoria del fichero
-			rd = new Random();
-			numAleatorio = rd.nextInt(0, cntLineas);
-			
-			// leemos la frase y la mostramos
-			leerFrase = new BufferedReader(new FileReader(flMotivacion));
-			for(int i = 0; i<=numAleatorio;i++) {
-				frase = leerFrase.readLine();
-				if(i == numAleatorio)
-					System.out.println(frase);
-			}
-		}else {
-			System.out.println("Error al iniciar el fichero. ¡Pero tu puedes con todo! (o no)");
-		}
 	}
 	
 	public static void guardarTareas(BufferedReader lector) throws IOException {
