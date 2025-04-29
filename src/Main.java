@@ -337,6 +337,16 @@ public class Main {
 			System.out.println("La ruta introducida no existe.");
 		}
 	}
+
+	// Método para el título
+    public static void mostrarTituloASCII() {
+        System.out.println(" _    _ _ _   _                 _    _______    _____        _      _     _   ");
+        System.out.println("| |  | | | | (_)               | |  |__   __|  |  __ \\      | |    (_)   | |  ");
+        System.out.println("| |  | | | |_ _ _ __ ___   __ _| |_ ___| | ___ | |  | | ___ | |     _ ___| |_ ");
+        System.out.println("| |  | | | __| | '_ ` _ \\ / _` | __/ _ \\ |/ _ \\| |  | |/ _ \\| |    | / __| __|");
+        System.out.println("| |__| | | |_| | | | | | | (_| | ||  __/ | (_) | |__| | (_) | |____| \\__ \\ |_ ");
+        System.out.println(" \\____/|_|\\__|_|_| |_| |_|\\__,_|\\__\\___|_|\\___/|_____/ \\___/|______|_|___/\\__|\n");
+    }
 	
 	/*
 	 * Método que nos va a permitir limpiar la pantalla de la terminal.
@@ -345,5 +355,6 @@ public class Main {
 	public static void limpiarPantalla() throws IOException {
 		System.out.print("\033[H\033[2J");
 		System.out.flush();
+		mostrarTituloASCII();
 	}
 }
